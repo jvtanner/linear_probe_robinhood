@@ -1,0 +1,226 @@
+Q1:
+
+0: .
+1: 31
+2: 41
+3: 53
+4: 93
+5: .
+6: 26
+7: 97
+8: 58
+9: 59
+
+
+
+Q2:
+
+0: .
+1: 41
+2: 31
+3: 93
+4: 53
+5: .
+6: 26
+7: 97
+8: 58
+9: 59
+
+
+
+Q3: Slot 2 & 3
+
+
+
+
+Q4: slots 7 & 8
+
+
+
+
+Q5:
+
+0: .
+1: 31
+2: T
+3: T
+4: 93
+5: .
+6: 26
+7: 97
+8: 58
+9: 59
+
+
+
+Q6:
+
+0: 106
+1: 31
+2: 107
+3: 110
+4: 93
+5: .
+6: 26
+7: 97
+8: 58
+9: 59
+
+
+
+
+Q7:
+
+0: 108 -> 2
+1: 151 -> -
+2: 221 -> 1
+3: 103 -> -
+4: .
+5: 145 -> -
+6: 245 -> 1
+7: 246 -> 1
+8: 106 -> 2
+9: 107 -> 2
+
+
+
+
+Q8:
+
+0: 108 -> 2
+1: 151 -> -
+2: 221 -> 1
+3: 103 -> -
+4: .
+5: 245 -> -
+6: 145 -> 1
+7: 246 -> 1
+8: 106 -> 2
+9: 107 -> 2
+
+
+
+
+Q9: Need to look in slots 5 and 6. Once I get to 7, the distance of
+from slot 5 now exceeds the distance value of the slot in 7,
+so I can call off the search early.
+
+
+
+Q10: Look in slot 0 only. Slot 1's distance is 0, so 300 couldn't be
+stored past that.
+
+
+
+
+
+Q11:
+
+0: 108 -> 2
+1: 221 -> -
+2: .
+3: 103 -> -
+4: .
+5: 145 -> -
+6: 245 -> 1
+7: 246 -> 1
+8: 106 -> 2
+9: 107 -> 2
+
+
+
+Q12:
+
+0: .
+1: 221 -> -
+2: .
+3: 103 -> -
+4: .
+5: 245 -> -
+6: 246 -> -
+7: 106 -> 1
+8: 107 -> 1
+9: 108 -> 1
+
+
+
+Q13:
+
+CHAINED HASHING
+On average, successful insertion takes ~150% longer than
+unsuccessful insertion for chained hashing. Insertion
+failure ends with a scan of items within the slot, whereas
+a success would involve the work of allocating space,
+potentially shifting elements.
+
+Successful lookup on avg takes longer than unsuccessful lookup.
+Successful lookup involves some scanning. Failed lookup
+involves two cases: one would involve scanning (more so
+than the successful instance), but the other would involve
+recognition of an empty string, which is no scanning at all.
+
+Remove success takes longer.
+Remove success always involves work, both scanning and removal.
+Unsuccessful means that either the element isn't in the slot and
+therefore the process is halted early, or the slot itself is
+empty and the process and stop immediately.
+
+
+
+Q14:
+
+LINEAR PROBING
+Successful insert is always faster than failed insert. There main
+difference between the two instances comes from the case in which
+the whole array is full (a costly failure), or the case in which
+the first few attempts are successful, which is very quick.
+
+Lookup failure longer than lookup success. The scanning
+stops at a success when the elem is reached, which by definition
+is always prior to an empty slot or a tombstone, which is where the
+failed case would have to stop.
+
+Early on since there aren't that many elements the failed version would just break
+early on after the first if statement but this trend changes as more and more elements
+are inserted, making successful removal easier and failed removal harder.
+
+
+Q15:
+
+ROBIN HOOD
+Insert success increases at the same-ish rate as that for Linear Probing,
+but the values are usually double due to the shift that must occur
+upon successful insertion. The insert failure initially becomes more efficient
+at lower increasing loads because of the robin hood movemnt based on the distance
+value, but then becomes more inefficient as the distance values surrounding
+any given slot become more homogenous.
+
+Lookup success initially decreases, then increases with an increasing load. The
+distance marking initially helps, much as was the case with insert failure. However this
+advantage is overtaken at increasing loads. Lookup failure stays relatively
+stable in the lower loads but eventually increases at great speed under heavier loads.
+Initially because of the distance counter the time will be relatively unchanged,
+but at higher loads the number of small distance counts is going to increase,
+resulting in increased scanning time.
+
+Successful removal takes a longer and longer time compared to a failed removal
+at increased loads cheifly because of the fact that at high loads, every removal
+triggers a backwards shift which requires the movement of huge numbers
+of elements.
+
+
+Q16:
+
+Chained will use the least because it can store multiple elements per slot,
+Robin hood will be the most because each slot contains one more parameter than
+linear probing.
+
+
+Q17:
+
+One possibility would be a Robin Hood function at a mid level load. Much of
+its efficiency actually reaches a minimum at this level, and it likely
+doesn't cost a significant amount more memory than the linear probing.
+
+
+
